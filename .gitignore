@@ -30,6 +30,7 @@ app2/migrations/
 
 # Static files
 static/
+staticfiles/
 
 # Media files
 media/
