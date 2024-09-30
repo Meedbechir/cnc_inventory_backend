@@ -17,7 +17,6 @@ class ArticleViewSet(viewsets.ModelViewSet):
         if not designation or not famille or not origine or not quantite:
             return Response({'error': 'Tous les champs doivent être remplis.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Vérifie que la famille est l'une des options valides
         valid_families = dict(Article.FAMILLE_CHOICES).keys()
         if famille not in valid_families:
             return Response({'error': 'Famille non valide. Options disponibles : MI, MB, MM, EM.'}, status=status.HTTP_400_BAD_REQUEST)
