@@ -14,6 +14,8 @@ class Article(models.Model):
     quantite = models.IntegerField()
     emplacement = models.CharField(max_length=255, blank=True)
     etat = models.CharField(max_length=50, default='Bon')
+    code_article = models.CharField(max_length=50, unique=True, blank=True)
+
 
     def __str__(self):
         return self.designation

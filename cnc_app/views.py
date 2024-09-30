@@ -17,10 +17,6 @@ class ArticleViewSet(viewsets.ModelViewSet):
         if not designation or not famille or not origine or not quantite:
             return Response({'error': 'Tous les champs doivent être remplis.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        valid_families = dict(Article.FAMILLE_CHOICES).keys()
-        if famille not in valid_families:
-            return Response({'error': 'Famille non valide. Options disponibles : MI, MB, MM, EM.'}, status=status.HTTP_400_BAD_REQUEST)
-
         try:
             quantite = int(quantite)
             if quantite <= 0: 
@@ -29,12 +25,14 @@ class ArticleViewSet(viewsets.ModelViewSet):
             return Response({'error': 'La quantité doit être un nombre entier.'}, status=status.HTTP_400_BAD_REQUEST)
 
         articles = []
-        for _ in range(quantite):
+        for i in range(quantite):
+            code_article = f"{designation[:3].lower()}{i+1}/{origine.lower()}"
             article = Article(
                 designation=designation,
                 famille=famille,
                 origine=origine,
-                quantite=1, 
+                quantite=1,
+                code_article=code_article
             )
             articles.append(article)
 
