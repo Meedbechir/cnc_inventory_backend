@@ -10,9 +10,9 @@ class SignupView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response({"message": "Inscription réussie"}, status=201) 
-    permission_classes = [permissions.AllowAny]
+        serializer.save()  # Save the user instance
+        return Response({"message": "Inscription réussie"}, status=201)
+
 
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
@@ -29,7 +29,6 @@ class LoginView(generics.GenericAPIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 "message": "Connexion réussie"
-            })
+            }, status=200)
         except Exception as e:
             return Response({"non_field_errors": ["Email ou mot de passe invalide"]}, status=400)
-
