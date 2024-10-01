@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'cnc_back.wsgi.application'
 # }
 
 # DATABASES = {
-#     "default": dj_database_url.parse("postgresql://meed:vRT2Ky67HGtZH6zSG9OcHGxRV2ZEjL0a@dpg-crt8s2btq21c73dlvs2g-a.oregon-postgres.render.com/cnc_db")
+#     "default": dj_database_url.parse("postgresql://cnc_db_mse1_user:yOdRigRRRyJFf93xyH0jZozxm0rxR0BO@dpg-crtvg7m8ii6s73apbeg0-a.oregon-postgres.render.com/cnc_db_mse1")
 # }
 
 DATABASES = {

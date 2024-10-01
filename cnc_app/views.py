@@ -1,21 +1,14 @@
-# cnc_app/views.py
 from rest_framework import viewsets
 from .models import Article
 from .serializers import ArticleSerializer
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated 
+from rest_framework.permissions import IsAuthenticated
+
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-
-    def get_permissions(self):
-        if self.action == 'create':
-            self.permission_classes = [IsAuthenticated]  
-        else:
-            self.permission_classes = [] 
-        return super().get_permissions()
 
     def create(self, request, *args, **kwargs):
         designation = request.data.get('designation')
