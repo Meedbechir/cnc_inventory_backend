@@ -1,6 +1,7 @@
 from pathlib import Path
-import dj_database_url
+# import dj_database_url 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,13 +28,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'corsheaders',
     'cnc_app',
+    'users',
     'rest_framework',
     'drf_yasg',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -76,20 +81,20 @@ WSGI_APPLICATION = 'cnc_back.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    "default": dj_database_url.parse("postgresql://meed:vRT2Ky67HGtZH6zSG9OcHGxRV2ZEjL0a@dpg-crt8s2btq21c73dlvs2g-a.oregon-postgres.render.com/cnc_db")
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'cnc_back',
-#         'USER': 'postgres',
-#         'PASSWORD': 'Moh@med9394@',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     },
+#     "default": dj_database_url.parse("postgresql://meed:vRT2Ky67HGtZH6zSG9OcHGxRV2ZEjL0a@dpg-crt8s2btq21c73dlvs2g-a.oregon-postgres.render.com/cnc_db")
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'cnc_test_auth',
+        'USER': 'postgres',
+        'PASSWORD': 'Moh@med9394@',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
+}
 
 
 # Password validation
@@ -122,6 +127,20 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1), 
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1), 
+}
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -132,10 +151,22 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ALLOWED_HOSTS = ['cnc-inventory-backend.onrender.com', '127.0.0.1']
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+# AUTH_USER_MODEL = 'users.User'
+
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
 
